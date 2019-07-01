@@ -32,7 +32,7 @@ dependencies {
 	         compile "com.github.Scarabei.Scarabei:scarabei-gson:$scarabeiVersion"
 	         compile "com.github.Scarabei.Scarabei:scarabei-red-desktop:$scarabeiVersion"
 	         compile "com.github.Scarabei.Scarabei:scarabei-aws-api:$scarabeiVersion"
-	         compile "com.github.Scarabei.Scarabei:scarabei-aws-red:$scarabeiVersion"
+	         compile "com.github.Scarabei.Scarabei:scarabei-aws-desktop:$scarabeiVersion"
 	         compile "com.google.code.gson:gson:2.8.0"
 }	
 	
