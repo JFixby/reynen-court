@@ -7,7 +7,6 @@ import com.jfixby.reynencourt.sns.credentials.AWSCredentials;
 import com.jfixby.reynencourt.sns.demo.storage.NotificationsStorage;
 import com.jfixby.reynencourt.sns.demo.storage.NotificationsStorageConfig;
 import com.jfixby.reynencourt.sns.demo.storage.NotificationsStorageSpecs;
-import com.jfixby.scarabei.amazon.aws.sns.RedSNS;
 import com.jfixby.scarabei.api.file.File;
 import com.jfixby.scarabei.api.file.LocalFileSystem;
 import com.jfixby.scarabei.api.json.Json;
@@ -15,6 +14,7 @@ import com.jfixby.scarabei.api.json.JsonString;
 import com.jfixby.scarabei.api.log.L;
 import com.jfixby.scarabei.aws.api.AWSCredentialsProvider;
 import com.jfixby.scarabei.aws.api.sns.SNS;
+import com.jfixby.scarabei.aws.desktop.sns.DesktopSNS;
 import com.jfixby.scarabei.red.desktop.ScarabeiDesktop;
 
 public class Run {
@@ -22,7 +22,7 @@ public class Run {
 	public static void main (final String[] args) throws IOException {
 
 		ScarabeiDesktop.deploy();
-		SNS.installComponent(new RedSNS());
+		SNS.installComponent(new DesktopSNS());
 
 		final File awsCredentialsFile = LocalFileSystem.ApplicationHome().parent().child("reynen-court-demo-config")
 			.child("credentials").child("aws-credentials.json");

@@ -21,7 +21,7 @@ sourceSets {
 }
 
 ext {
-        scarabeiVersion = "b5e0fab89f"
+        scarabeiVersion = "914840da6f"
 }
 
 
