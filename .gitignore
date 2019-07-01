@@ -14,3 +14,5 @@
 hs_err_pid*
 
 \.project
+
+reynen-court-demo-config/credentials/aws-credentials\.json
