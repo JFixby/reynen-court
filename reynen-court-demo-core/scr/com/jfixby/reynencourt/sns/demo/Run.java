@@ -44,6 +44,7 @@ public class Run {
 		specs.sQSMailboxPrefix = (storageConfig.sqsMailboxPrefix);
 		specs.separatorStartProcessingDelay = (storageConfig.separatorStartProcessingDelay);
 		specs.aWSCredentialsProvider = awsKeys;
+		specs.SNSEndpoint = "";
 
 		final NotificationsStorage storage = NotificationsStorage.newNotificationsStorage(specs);
 		storage.consumeDataSample(null);
