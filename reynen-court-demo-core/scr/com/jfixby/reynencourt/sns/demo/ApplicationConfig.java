@@ -1,7 +1,7 @@
 
-package com.jfixby.reynencourt.sns.demo.storage;
+package com.jfixby.reynencourt.sns.demo;
 
-public class NotificationsStorageConfig {
+public class ApplicationConfig {
 
 	public boolean debugMode;
 	public String sqsMailboxPrefix;

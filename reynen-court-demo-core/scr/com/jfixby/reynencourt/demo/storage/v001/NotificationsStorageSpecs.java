@@ -1,5 +1,5 @@
 
-package com.jfixby.reynencourt.sns.demo.storage;
+package com.jfixby.reynencourt.demo.storage.v001;
 
 import com.jfixby.scarabei.aws.api.AWSCredentialsProvider;
 

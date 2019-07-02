@@ -3,5 +3,6 @@ sourceCompatibility = 1.8
 dependencies {
     compile "com.github.Scarabei.Scarabei:scarabei-aws-desktop:$scarabeiVersion"
     compile "com.github.Scarabei.Scarabei:scarabei-red-desktop:$scarabeiVersion"
+    providedCompile 'javax.servlet:javax.servlet-api:3.0.1'
 }
 

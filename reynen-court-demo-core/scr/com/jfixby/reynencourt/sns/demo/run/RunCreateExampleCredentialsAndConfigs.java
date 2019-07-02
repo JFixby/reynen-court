@@ -4,7 +4,7 @@ package com.jfixby.reynencourt.sns.demo.run;
 import java.io.IOException;
 
 import com.jfixby.reynencourt.sns.credentials.AWSCredentials;
-import com.jfixby.reynencourt.sns.demo.storage.NotificationsStorageConfig;
+import com.jfixby.reynencourt.sns.demo.ApplicationConfig;
 import com.jfixby.scarabei.api.file.File;
 import com.jfixby.scarabei.api.file.LocalFileSystem;
 import com.jfixby.scarabei.api.json.Json;
@@ -35,7 +35,7 @@ public class RunCreateExampleCredentialsAndConfigs {
 		}
 
 		{
-			final NotificationsStorageConfig config = new NotificationsStorageConfig();
+			final ApplicationConfig config = new ApplicationConfig();
 
 			config.inputQueueURL = "http://inout.queue";
 			config.separatorStartProcessingDelay = 1000;

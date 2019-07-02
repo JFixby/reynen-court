@@ -18,6 +18,7 @@ repositories {
     
 apply plugin: "java"
 apply plugin: "maven"
+apply plugin: "war"
 
 ext {
         scarabeiVersion = "4f7c2d67bd"
