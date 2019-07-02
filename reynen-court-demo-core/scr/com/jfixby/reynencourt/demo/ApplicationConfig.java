@@ -8,5 +8,6 @@ public class ApplicationConfig {
 	public long separatorStartProcessingDelay;
 	public String inputQueueURL;
 	public String snsTopicARN;
+	public String s3BucketName;
 
 }

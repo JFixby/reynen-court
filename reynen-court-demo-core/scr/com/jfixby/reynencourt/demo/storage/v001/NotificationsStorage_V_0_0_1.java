@@ -1,6 +1,8 @@
 
 package com.jfixby.reynencourt.demo.storage.v001;
 
+import java.io.IOException;
+
 import com.jfixby.reynencourt.demo.DataSample;
 import com.jfixby.reynencourt.demo.api.DataSampleStorage;
 import com.jfixby.scarabei.api.collections.Collection;
@@ -9,10 +11,14 @@ import com.jfixby.scarabei.api.collections.Collections;
 import com.jfixby.scarabei.api.collections.List;
 import com.jfixby.scarabei.api.debug.Debug;
 import com.jfixby.scarabei.api.err.Err;
+import com.jfixby.scarabei.api.file.File;
+import com.jfixby.scarabei.api.file.FileOutputStream;
 import com.jfixby.scarabei.api.io.InputStream;
+import com.jfixby.scarabei.api.io.OutputStream;
 import com.jfixby.scarabei.api.json.Json;
 import com.jfixby.scarabei.api.json.JsonString;
 import com.jfixby.scarabei.api.log.L;
+import com.jfixby.scarabei.api.md5.MD5;
 import com.jfixby.scarabei.api.sys.Sys;
 import com.jfixby.scarabei.aws.api.AWSCredentialsProvider;
 import com.jfixby.scarabei.aws.api.sns.SNS;
@@ -42,6 +48,9 @@ public class NotificationsStorage_V_0_0_1 implements DataSampleStorage {
 	private final String inputQueueURL;
 	private final AWSCredentialsProvider awsKeys;
 	private final String topicArn;
+	private final File storageFolder;
+	private final File samplesStorage;
+	private final File archivesStorage;
 
 	NotificationsStorage_V_0_0_1 (final NotificationsStorageSpecs specs) {
 		this.inputQueueURL = Debug.checkNull("queueURL", specs.inputQueueURL);
@@ -50,6 +59,12 @@ public class NotificationsStorage_V_0_0_1 implements DataSampleStorage {
 		Debug.checkNull("awsKeys", this.awsKeys);
 		this.topicArn = specs.snsTopicARN;
 		Debug.checkNull("topicArn", this.topicArn);
+
+		this.storageFolder = specs.storageFolder;
+		Debug.checkNull("storageFolder", this.storageFolder);
+
+		this.samplesStorage = this.storageFolder.child("data-samples");
+		this.archivesStorage = this.storageFolder.child("archives");
 	}
 
 	// Consume data of structure
@@ -131,15 +146,35 @@ public class NotificationsStorage_V_0_0_1 implements DataSampleStorage {
 	}
 
 	@Override
-	public String archive (final long fromTimestamp, final long toTimestamp) {
-		Err.throwNotImplementedYet();
+	public String archive (final long fromTimestamp, final long toTimestamp) throws IOException {
+		final Collection<DataSample> result = this.queryFromToTimestamp(fromTimestamp, toTimestamp);
+		final String archiveId = "archive-" + fromTimestamp + "-" + toTimestamp;
+		final File archiveFile = this.archivesStorage.child(this.fileNameById(archiveId));
+		final FileOutputStream os = archiveFile.newOutputStream();
+		os.open();
+		this.writeDataSamplesToStream(result, os);
+		os.close();
 		return null;
 	}
 
 	@Override
 	public InputStream readArchive (final String archiveId) {
-		Err.throwNotImplementedYet();
-		return null;
+		final File archiveFile = this.archivesStorage.child(this.fileNameById(archiveId));
+		return archiveFile.newInputStream();
+	}
+
+	private String fileNameById (final String archiveId) {
+		return Sys.SystemTime().currentTimeMillis() + "" + MD5.md5String(archiveId);
+	}
+
+	@Override
+	public void writeDataSamplesToStream (final Collection<DataSample> result, final OutputStream os) throws IOException {
+		for (final DataSample s : result) {
+			final JsonString string = Json.serializeToString(s);
+			final byte[] bytes = string.toString().getBytes();
+			os.write(bytes);
+		}
+		os.flush();
 	}
 
 }

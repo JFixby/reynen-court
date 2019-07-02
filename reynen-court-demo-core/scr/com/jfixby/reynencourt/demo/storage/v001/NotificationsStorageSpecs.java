@@ -1,6 +1,7 @@
 
 package com.jfixby.reynencourt.demo.storage.v001;
 
+import com.jfixby.scarabei.api.file.File;
 import com.jfixby.scarabei.aws.api.AWSCredentialsProvider;
 
 public class NotificationsStorageSpecs {
@@ -11,5 +12,6 @@ public class NotificationsStorageSpecs {
 	public long separatorStartProcessingDelay;
 	public String inputQueueURL;
 	public String snsTopicARN;
+	public File storageFolder;
 
 }

@@ -31,7 +31,6 @@ import com.jfixby.scarabei.api.java.Int;
 import com.jfixby.scarabei.api.java.gc.GCFisher;
 import com.jfixby.scarabei.api.java.gc.MemoryStatistics;
 import com.jfixby.scarabei.api.json.Json;
-import com.jfixby.scarabei.api.json.JsonString;
 import com.jfixby.scarabei.api.log.L;
 import com.jfixby.scarabei.api.math.Average;
 import com.jfixby.scarabei.api.math.FloatMath;
@@ -268,18 +267,9 @@ public class RequestProcessor {
 		final long fromTimestamp = Long.parseLong(getHeader("from", arg.inputHeaders));
 		final long toTimestamp = Long.parseLong(getHeader("to", arg.inputHeaders));
 		final Collection<DataSample> result = this.storage.queryFromToTimestamp(fromTimestamp, toTimestamp);
-		this.sendDataSamples(result, arg);
-	}
-
-	private void sendDataSamples (final Collection<DataSample> result, final EntryPointArguments arg) throws IOException {
 		final OutputStream os = IO.newOutputStream( () -> arg.server_to_client_stream);
 		os.open();
-		for (final DataSample s : result) {
-			final JsonString string = Json.serializeToString(s);
-			final byte[] bytes = string.toString().getBytes();
-			os.write(bytes);
-		}
-		os.flush();
+		this.storage.writeDataSamplesToStream(result, os);
 		os.close();
 	}
 
