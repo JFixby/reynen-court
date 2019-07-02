@@ -1,11 +1,11 @@
 
-package com.jfixby.reynencourt.sns.demo.run;
+package com.jfixby.reynencourt.demo.run;
 
 import java.io.IOException;
 
+import com.jfixby.reynencourt.demo.DataSample;
+import com.jfixby.reynencourt.demo.Deployment;
 import com.jfixby.reynencourt.demo.api.DataSampleStorage;
-import com.jfixby.reynencourt.sns.demo.DataSample;
-import com.jfixby.reynencourt.sns.demo.Deployment;
 import com.jfixby.scarabei.api.collections.Collection;
 import com.jfixby.scarabei.api.log.L;
 import com.jfixby.scarabei.api.sys.Sys;

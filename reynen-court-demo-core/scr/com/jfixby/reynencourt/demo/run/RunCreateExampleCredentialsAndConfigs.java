@@ -1,10 +1,10 @@
 
-package com.jfixby.reynencourt.sns.demo.run;
+package com.jfixby.reynencourt.demo.run;
 
 import java.io.IOException;
 
-import com.jfixby.reynencourt.sns.credentials.AWSCredentials;
-import com.jfixby.reynencourt.sns.demo.ApplicationConfig;
+import com.jfixby.reynencourt.demo.ApplicationConfig;
+import com.jfixby.reynencourt.demo.credentials.AWSCredentials;
 import com.jfixby.scarabei.api.file.File;
 import com.jfixby.scarabei.api.file.LocalFileSystem;
 import com.jfixby.scarabei.api.json.Json;

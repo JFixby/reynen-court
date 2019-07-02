@@ -1,5 +1,5 @@
 
-package com.jfixby.reynencourt.sns.credentials;
+package com.jfixby.reynencourt.demo.credentials;
 
 import com.jfixby.scarabei.aws.api.AWSCredentialsProvider;
 

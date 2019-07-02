@@ -1,7 +1,7 @@
 
 package com.jfixby.reynencourt.demo.api;
 
-import com.jfixby.reynencourt.sns.demo.DataSample;
+import com.jfixby.reynencourt.demo.DataSample;
 import com.jfixby.scarabei.api.collections.Collection;
 import com.jfixby.scarabei.api.io.InputStream;
 

@@ -1,12 +1,12 @@
 
-package com.jfixby.reynencourt.sns.demo;
+package com.jfixby.reynencourt.demo;
 
 import java.io.IOException;
 
 import com.jfixby.reynencourt.demo.api.DataSampleStorage;
+import com.jfixby.reynencourt.demo.credentials.AWSCredentials;
 import com.jfixby.reynencourt.demo.storage.v001.NotificationsStorageSpecs;
 import com.jfixby.reynencourt.demo.storage.v001.NotificationsStorage_V_0_0_1;
-import com.jfixby.reynencourt.sns.credentials.AWSCredentials;
 import com.jfixby.scarabei.api.file.File;
 import com.jfixby.scarabei.api.file.LocalFileSystem;
 import com.jfixby.scarabei.api.json.Json;

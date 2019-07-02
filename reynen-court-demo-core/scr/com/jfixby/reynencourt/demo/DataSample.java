@@ -1,5 +1,5 @@
 
-package com.jfixby.reynencourt.sns.demo;
+package com.jfixby.reynencourt.demo;
 
 public class DataSample {
 

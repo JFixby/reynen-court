@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry combineaccessrules="false" kind="src" path="/scarabei-aws-red"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/scarabei-red"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/scarabei-red-desktop"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/scarabei-api"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/scarabei-aws-api"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/scarabei-aws-desktop"/>
 	<classpathentry kind="src" path="scr"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8/"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
@@ -8,11 +14,5 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry combineaccessrules="false" kind="src" path="/scarabei-aws-red"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/scarabei-red"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/scarabei-red-desktop"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/scarabei-api"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/scarabei-aws-api"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/scarabei-aws-desktop"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
