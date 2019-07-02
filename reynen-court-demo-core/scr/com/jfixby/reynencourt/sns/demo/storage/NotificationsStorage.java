@@ -1,6 +1,10 @@
 
 package com.jfixby.reynencourt.sns.demo.storage;
 
+import com.jfixby.scarabei.api.collections.Collection;
+import com.jfixby.scarabei.api.collections.CollectionConverter;
+import com.jfixby.scarabei.api.collections.Collections;
+import com.jfixby.scarabei.api.collections.List;
 import com.jfixby.scarabei.api.debug.Debug;
 import com.jfixby.scarabei.api.json.Json;
 import com.jfixby.scarabei.api.json.JsonString;
@@ -14,6 +18,14 @@ import com.jfixby.scarabei.aws.api.sns.SNSComponent;
 import com.jfixby.scarabei.aws.api.sns.SNSPublishRequest;
 import com.jfixby.scarabei.aws.api.sns.SNSPublishRequestSpecs;
 import com.jfixby.scarabei.aws.api.sns.SNSPublishResult;
+import com.jfixby.scarabei.aws.api.sqs.SQS;
+import com.jfixby.scarabei.aws.api.sqs.SQSClienSpecs;
+import com.jfixby.scarabei.aws.api.sqs.SQSClient;
+import com.jfixby.scarabei.aws.api.sqs.SQSComponent;
+import com.jfixby.scarabei.aws.api.sqs.SQSMessage;
+import com.jfixby.scarabei.aws.api.sqs.SQSReceiveMessageParams;
+import com.jfixby.scarabei.aws.api.sqs.SQSReceiveMessageRequest;
+import com.jfixby.scarabei.aws.api.sqs.SQSReceiveMessageResult;
 
 public class NotificationsStorage {
 
@@ -30,24 +42,26 @@ public class NotificationsStorage {
 	NotificationsStorage (final NotificationsStorageSpecs specs) {
 		this.inputQueueURL = Debug.checkNull("queueURL", specs.inputQueueURL);
 		Debug.checkEmpty("queueURL", this.inputQueueURL);
-
 		this.awsKeys = specs.aWSCredentialsProvider;
 		Debug.checkNull("awsKeys", this.awsKeys);
-
 		this.topicArn = specs.snsTopicARN;
 		Debug.checkNull("topicArn", this.topicArn);
-
 	}
 
+	// Consume data of structure
+	// {
+	// 'timestamp':<timestamp>,
+	// 'event_id':event_id,
+	// 'event_type':event_type,
+	// 'value':value
+	// }
 	public void consumeDataSample (final DataSample sample) {
 		try {
-			final SNSComponent sns = SNS.component();
-
+			final SNSComponent sns = SNS.invoke();
 			final SNSClientSpecs clSpecs = sns.newClientSpecs();
 			clSpecs.setAWSCredentialsProvider(this.awsKeys);
 
 			final SNSClient snsClient = sns.newClient(clSpecs);
-
 			final JsonString jsonString = Json.serializeToString(sample);
 
 			final String msg = jsonString.toString();
@@ -56,14 +70,46 @@ public class NotificationsStorage {
 			pspec.messageString = msg;
 
 			final SNSPublishRequest pr = SNS.component().newPublishRequest(pspec);
-
 			final SNSPublishResult result = snsClient.publish(pr);
-
+// L.d(result);
 		} catch (final Throwable e) {
 			L.e(e);
 		} finally {
 			Sys.sleep(1);
 		}
+	}
+
+	public Collection<DataSample> queryFromToTimestamp (final long fromTimestamp, final long toTimestamp) {
+		final SQSComponent sqs = SQS.invoke();
+		final SQSClienSpecs clSpecs = sqs.newSQSClienSpecs();
+		clSpecs.setAWSCredentialsProvider(this.awsKeys);
+
+		final SQSClient sqsClient = sqs.newClient(clSpecs);
+
+		final SQSReceiveMessageParams params = sqs.newReceiveMessageParams();
+		params.setQueueURL(this.inputQueueURL);
+		final SQSReceiveMessageRequest request = sqs.newReceiveMessageRequest(params);
+		final SQSReceiveMessageResult result = sqsClient.receive(request);
+
+		final Collection<SQSMessage> msgs = result.listMessages();
+		L.d("msgs", msgs);
+		final List<DataSample> samples = Collections.newList();
+		Collections.convertCollection(msgs, samples, this.messageToDataSampleConverter);
+
+		return samples;
+	}
+
+	private final CollectionConverter<SQSMessage, DataSample> messageToDataSampleConverter = new CollectionConverter<SQSMessage, DataSample>() {
+		@Override
+		public DataSample convert (final SQSMessage input) {
+			return NotificationsStorage.messageToDataSample(input);
+		}
+	};
+
+	protected static DataSample messageToDataSample (final SQSMessage input) {
+		final String bodyString = input.getBody();
+		final DataSample s = Json.deserializeFromString(DataSample.class, bodyString);
+		return s;
 	}
 
 }
