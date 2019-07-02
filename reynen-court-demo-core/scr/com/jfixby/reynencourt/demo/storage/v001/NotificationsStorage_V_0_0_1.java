@@ -1,11 +1,15 @@
 
-package com.jfixby.reynencourt.sns.demo.storage;
+package com.jfixby.reynencourt.demo.storage.v001;
 
+import com.jfixby.reynencourt.demo.api.DataSampleStorage;
+import com.jfixby.reynencourt.sns.demo.DataSample;
 import com.jfixby.scarabei.api.collections.Collection;
 import com.jfixby.scarabei.api.collections.CollectionConverter;
 import com.jfixby.scarabei.api.collections.Collections;
 import com.jfixby.scarabei.api.collections.List;
 import com.jfixby.scarabei.api.debug.Debug;
+import com.jfixby.scarabei.api.err.Err;
+import com.jfixby.scarabei.api.io.InputStream;
 import com.jfixby.scarabei.api.json.Json;
 import com.jfixby.scarabei.api.json.JsonString;
 import com.jfixby.scarabei.api.log.L;
@@ -27,10 +31,10 @@ import com.jfixby.scarabei.aws.api.sqs.SQSReceiveMessageParams;
 import com.jfixby.scarabei.aws.api.sqs.SQSReceiveMessageRequest;
 import com.jfixby.scarabei.aws.api.sqs.SQSReceiveMessageResult;
 
-public class NotificationsStorage {
+public class NotificationsStorage_V_0_0_1 implements DataSampleStorage {
 
-	public static NotificationsStorage newNotificationsStorage (final NotificationsStorageSpecs specs) {
-		final NotificationsStorage S = new NotificationsStorage(specs);
+	public static NotificationsStorage_V_0_0_1 newNotificationsStorage (final NotificationsStorageSpecs specs) {
+		final NotificationsStorage_V_0_0_1 S = new NotificationsStorage_V_0_0_1(specs);
 
 		return S;
 	}
@@ -39,7 +43,7 @@ public class NotificationsStorage {
 	private final AWSCredentialsProvider awsKeys;
 	private final String topicArn;
 
-	NotificationsStorage (final NotificationsStorageSpecs specs) {
+	NotificationsStorage_V_0_0_1 (final NotificationsStorageSpecs specs) {
 		this.inputQueueURL = Debug.checkNull("queueURL", specs.inputQueueURL);
 		Debug.checkEmpty("queueURL", this.inputQueueURL);
 		this.awsKeys = specs.aWSCredentialsProvider;
@@ -55,6 +59,7 @@ public class NotificationsStorage {
 	// 'event_type':event_type,
 	// 'value':value
 	// }
+	@Override
 	public void consumeDataSample (final DataSample sample) {
 		try {
 			final SNSComponent sns = SNS.invoke();
@@ -79,6 +84,7 @@ public class NotificationsStorage {
 		}
 	}
 
+	@Override
 	public Collection<DataSample> queryFromToTimestamp (final long fromTimestamp, final long toTimestamp) {
 		final SQSComponent sqs = SQS.invoke();
 		final SQSClienSpecs clSpecs = sqs.newSQSClienSpecs();
@@ -102,7 +108,7 @@ public class NotificationsStorage {
 	private final CollectionConverter<SQSMessage, DataSample> messageToDataSampleConverter = new CollectionConverter<SQSMessage, DataSample>() {
 		@Override
 		public DataSample convert (final SQSMessage input) {
-			return NotificationsStorage.messageToDataSample(input);
+			return NotificationsStorage_V_0_0_1.messageToDataSample(input);
 		}
 	};
 
@@ -110,6 +116,30 @@ public class NotificationsStorage {
 		final String bodyString = input.getBody();
 		final DataSample s = Json.deserializeFromString(DataSample.class, bodyString);
 		return s;
+	}
+
+	@Override
+	public String aggregateAverage (final long fromTimestamp, final long toTimestamp) {
+		Err.throwNotImplementedYet();
+		return null;
+	}
+
+	@Override
+	public String aggregateSum (final long fromTimestamp, final long toTimestamp) {
+		Err.throwNotImplementedYet();
+		return null;
+	}
+
+	@Override
+	public String archive (final long fromTimestamp, final long toTimestamp) {
+		Err.throwNotImplementedYet();
+		return null;
+	}
+
+	@Override
+	public InputStream readArchive (final String archiveId) {
+		Err.throwNotImplementedYet();
+		return null;
 	}
 
 }
