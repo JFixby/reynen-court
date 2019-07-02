@@ -10,6 +10,6 @@ public class NotificationsStorageSpecs {
 	public String sQSMailboxPrefix;
 	public long separatorStartProcessingDelay;
 	public String inputQueueURL;
-	public String SNSEndpoint;
+	public String snsTopicARN;
 
 }

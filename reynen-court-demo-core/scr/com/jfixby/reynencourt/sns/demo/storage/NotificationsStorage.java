@@ -34,7 +34,7 @@ public class NotificationsStorage {
 		this.awsKeys = specs.aWSCredentialsProvider;
 		Debug.checkNull("awsKeys", this.awsKeys);
 
-		this.topicArn = specs.SNSEndpoint;
+		this.topicArn = specs.snsTopicARN;
 		Debug.checkNull("topicArn", this.topicArn);
 
 	}

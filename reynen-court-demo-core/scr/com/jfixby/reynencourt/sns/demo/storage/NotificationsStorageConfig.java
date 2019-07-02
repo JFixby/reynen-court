@@ -7,5 +7,6 @@ public class NotificationsStorageConfig {
 	public String sqsMailboxPrefix;
 	public long separatorStartProcessingDelay;
 	public String inputQueueURL;
+	public String snsTopicARN;
 
 }

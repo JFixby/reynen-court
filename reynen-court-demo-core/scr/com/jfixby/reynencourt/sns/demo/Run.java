@@ -4,6 +4,7 @@ package com.jfixby.reynencourt.sns.demo;
 import java.io.IOException;
 
 import com.jfixby.reynencourt.sns.credentials.AWSCredentials;
+import com.jfixby.reynencourt.sns.demo.storage.DataSample;
 import com.jfixby.reynencourt.sns.demo.storage.NotificationsStorage;
 import com.jfixby.reynencourt.sns.demo.storage.NotificationsStorageConfig;
 import com.jfixby.reynencourt.sns.demo.storage.NotificationsStorageSpecs;
@@ -39,15 +40,14 @@ public class Run {
 		final NotificationsStorageSpecs specs = new NotificationsStorageSpecs();
 		specs.inputQueueURL = (storageConfig.inputQueueURL);
 
-		specs.aWSCredentialsProvider = (awsKeys);
-		specs.debugMode = (storageConfig.debugMode);
-		specs.sQSMailboxPrefix = (storageConfig.sqsMailboxPrefix);
-		specs.separatorStartProcessingDelay = (storageConfig.separatorStartProcessingDelay);
 		specs.aWSCredentialsProvider = awsKeys;
-		specs.SNSEndpoint = "";
+		specs.debugMode = storageConfig.debugMode;
+		specs.sQSMailboxPrefix = storageConfig.sqsMailboxPrefix;
+		specs.separatorStartProcessingDelay = storageConfig.separatorStartProcessingDelay;
+		specs.snsTopicARN = storageConfig.snsTopicARN;
 
 		final NotificationsStorage storage = NotificationsStorage.newNotificationsStorage(specs);
-		storage.consumeDataSample(null);
+		storage.consumeDataSample(new DataSample());
 
 	}
 
