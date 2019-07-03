@@ -8,6 +8,7 @@ import com.jfixby.scarabei.api.file.File;
 import com.jfixby.scarabei.api.file.LocalFileSystem;
 import com.jfixby.scarabei.api.json.Json;
 import com.jfixby.scarabei.api.json.JsonString;
+import com.jfixby.scarabei.api.log.L;
 import com.jfixby.scarabei.aws.api.AWSCredentials;
 import com.jfixby.scarabei.aws.api.AWSCredentialsProvider;
 import com.jfixby.scarabei.aws.api.s3.S3;
@@ -38,7 +39,7 @@ public class Setup {
 		s3config.setRegionName(awsKeys.getRegionName());
 		s3config.setSecretKeyID(awsKeys.getSecretKeyID());
 		s3config.setBucketName(storageConfig.s3BucketName);
-
+		L.d("Connecting to S3 Bucket", storageConfig.s3BucketName + " at " + awsKeys.getRegionName() + " ...");
 		final S3FileSystem fs = s3.newFileSystem(s3config);
 
 		return fs;

@@ -6,6 +6,7 @@ import java.io.IOException;
 import com.jfixby.scarabei.api.file.File;
 import com.jfixby.scarabei.api.file.FileConflistResolver;
 import com.jfixby.scarabei.api.file.LocalFileSystem;
+import com.jfixby.scarabei.api.log.L;
 import com.jfixby.scarabei.aws.api.s3.S3FileSystem;
 
 public class UploadJars {
@@ -18,6 +19,8 @@ public class UploadJars {
 		final File source = LocalFileSystem.ApplicationHome().child("upload");
 
 		fs.copyFolderContentsToFolder(source, destination, conflictResolution);
+
+		L.d("Upload complete");
 	}
 
 	static FileConflistResolver conflictResolution = new FileConflistResolver() {
