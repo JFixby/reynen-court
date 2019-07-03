@@ -12,6 +12,8 @@ import com.jfixby.scarabei.api.err.Err;
 import com.jfixby.scarabei.api.file.File;
 import com.jfixby.scarabei.api.file.FileOutputStream;
 import com.jfixby.scarabei.api.file.FilesList;
+import com.jfixby.scarabei.api.io.GZipOutputStream;
+import com.jfixby.scarabei.api.io.IO;
 import com.jfixby.scarabei.api.io.InputStream;
 import com.jfixby.scarabei.api.io.OutputStream;
 import com.jfixby.scarabei.api.json.Json;
@@ -118,10 +120,14 @@ public class NotificationsStorage_V_0_0_1 implements DataSampleStorage {
 		final String archiveId = "archive-" + fromTimestamp + "-" + toTimestamp;
 		final File archiveFile = this.archivesStorage.child(this.fileNameById(archiveId));
 		final FileOutputStream os = archiveFile.newOutputStream();
+		final GZipOutputStream zip = IO.newGZipStream(os);
 		os.open();
-		this.writeDataSamplesToStream(result, os);
+		zip.open();
+		this.writeDataSamplesToStream(result, zip);
+		zip.flush();
+		zip.close();
 		os.close();
-		return null;
+		return archiveId;
 	}
 
 	@Override
