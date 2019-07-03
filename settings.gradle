@@ -1,7 +1,6 @@
-include "reynen-court-demo-core"
-include "reynen-court-demo-config"
-include "reynen-court-lambda"
-
+include "reynen-court-demo-lambda"
+include "reynen-court-demo-deploy"
+include "reynen-court-demo-jars"
 
 
 
