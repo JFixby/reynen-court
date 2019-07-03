@@ -29,6 +29,9 @@ public class ConsumeDataSample implements RequestHandler<DataSample, String> {
 
 	@Override
 	public String handleRequest (final DataSample input, final Context context) {
+		if (DefaultDataSample.equals(input)) {
+			return "No DataSample found: " + input;
+		}
 		context.getLogger().log("Input: " + input);
 		return "Output: <" + input + ">";
 	}
