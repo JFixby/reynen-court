@@ -1,5 +1,5 @@
 
-package com.jfixby.reynencourt.demo;
+package com.jfixby.reynencourt.demo.run;
 
 import com.jfixby.reynencourt.demo.lambda.ConsumeDataSample;
 

@@ -22,10 +22,10 @@ public class ConsumeDataSample implements RequestHandler<DataSample, String> {
 		SystemSettings.setExecutionMode(ExecutionMode.EARLY_DEVELOPMENT);
 		final Map<ID, Object> settings = SystemSettings.listAllSettings();
 		L.d("System settings", settings);
-		System.getenv("S3_BUCKET_NAME");
+		DefaultDataSample = Json.deserializeFromString(DataSample.class, "");
 	}
 
-	static DataSample DefaultDataSample = Json.deserializeFromString(DataSample.class, "");
+	static final DataSample DefaultDataSample;
 
 	@Override
 	public String handleRequest (final DataSample input, final Context context) {
