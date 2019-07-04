@@ -89,6 +89,8 @@ public class Archive implements RequestHandler<APIGatewayProxyRequestEvent, APIG
 		final Long from = Long.parseLong(params.get("from"));
 		final Long to = Long.parseLong(params.get("to"));
 
+		context.getLogger().log("Input: from=" + from + " to=" + to);
+
 		final HttpCallParams callParams = Http.newCallParams();
 		final HttpURL http_url = Http.newURL(queryServerUrlString + "?from=" + from + "&to=" + to);
 		callParams.setURL(http_url);
