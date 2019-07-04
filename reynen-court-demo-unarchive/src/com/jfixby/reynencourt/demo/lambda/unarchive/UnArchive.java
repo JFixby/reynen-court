@@ -3,17 +3,18 @@ package com.jfixby.reynencourt.demo.lambda.unarchive;
 
 import java.io.IOException;
 
+import org.apache.commons.codec.binary.Base64;
+
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestStreamHandler;
+import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
 import com.jfixby.scarabei.api.collections.Map;
 import com.jfixby.scarabei.api.err.Err;
 import com.jfixby.scarabei.api.file.File;
-import com.jfixby.scarabei.api.file.FileInputStream;
 import com.jfixby.scarabei.api.file.FilesList;
 import com.jfixby.scarabei.api.io.IO;
 import com.jfixby.scarabei.api.io.InputStream;
 import com.jfixby.scarabei.api.io.OutputStream;
-import com.jfixby.scarabei.api.io.StreamPipe;
 import com.jfixby.scarabei.api.json.Json;
 import com.jfixby.scarabei.api.log.L;
 import com.jfixby.scarabei.api.names.ID;
@@ -91,18 +92,19 @@ public class UnArchive implements RequestStreamHandler {
 				return;
 			}
 
-			final FileInputStream fis = archive.newInputStream();
+			final APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent();
+			response.setStatusCode(200);
+			final String base64 = new String(Base64.encodeBase64(archive.readBytes().toArray()));
+			response.setBody(base64);
+			response.setIsBase64Encoded(true);
 
+			final byte[] bytes = Json.serializeToString(response).toString().getBytes();
 			{
-				fis.open();
 				os.open();
-
-				final StreamPipe pipe = IO.newStreamPipe(fis, os, null);
-				pipe.transferAll();
-
+				os.write(bytes);
 				os.close();
-				fis.close();
 			}
+
 		} catch (final IOException e) {
 			e.printStackTrace();
 // Err.reportError(e);
