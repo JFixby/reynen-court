@@ -1,6 +1,0 @@
-{
-	"debugMode": true,
-	"inputQueueURL": "https://sqs.us-west-1.amazonaws.com/130772460409/reynen-sqs",
-	"snsTopicARN": "arn:aws:sns:us-west-1:130772460409:raynen-sns",
-	"s3BucketName": "raynen-s3"
-}

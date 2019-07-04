@@ -21,3 +21,4 @@ reynen-court-demo-config/credentials/aws-credentials\.json
 reynen-court-demo-deploy/\.classpath
 
 reynen-court-demo-lambda/\.classpath
+/x/

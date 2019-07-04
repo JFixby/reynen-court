@@ -1,6 +1,0 @@
-{
-  "debugMode": false,
-  "sqsMailboxPrefix": "kns-usr-nbox",
-  "separatorStartProcessingDelay": 1000,
-  "inputQueueURL": "http://inout.queue"
-}
