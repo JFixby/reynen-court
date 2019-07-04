@@ -4,10 +4,8 @@ package com.jfixby.reynencourt.demo.lambda.archive;
 import java.io.IOException;
 
 import com.amazonaws.services.lambda.runtime.Context;
-import com.amazonaws.services.lambda.runtime.RequestHandler;
-import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
+import com.amazonaws.services.lambda.runtime.RequestStreamHandler;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
-import com.jfixby.scarabei.api.collections.Collections;
 import com.jfixby.scarabei.api.collections.Map;
 import com.jfixby.scarabei.api.err.Err;
 import com.jfixby.scarabei.api.file.File;
@@ -15,6 +13,9 @@ import com.jfixby.scarabei.api.file.FileOutputStream;
 import com.jfixby.scarabei.api.file.FilesList;
 import com.jfixby.scarabei.api.io.GZipOutputStream;
 import com.jfixby.scarabei.api.io.IO;
+import com.jfixby.scarabei.api.io.InputStream;
+import com.jfixby.scarabei.api.io.OutputStream;
+import com.jfixby.scarabei.api.json.Json;
 import com.jfixby.scarabei.api.log.L;
 import com.jfixby.scarabei.api.names.ID;
 import com.jfixby.scarabei.api.names.Names;
@@ -34,7 +35,7 @@ import com.jfixby.scarabei.aws.api.s3.S3FileSystemConfig;
 import com.jfixby.scarabei.aws.desktop.s3.DesktopS3;
 import com.jfixby.scarabei.red.desktop.ScarabeiDesktop;
 
-public class Archive implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
+public class Archive implements RequestStreamHandler {
 
 	private static File archivesFolder;
 	private static String queryServerUrlString;
@@ -81,46 +82,58 @@ public class Archive implements RequestHandler<APIGatewayProxyRequestEvent, APIG
 	}
 
 	@Override
-	public APIGatewayProxyResponseEvent handleRequest (final APIGatewayProxyRequestEvent input, final Context context) {
-		context.getLogger().log("Input: " + input);
-
-		final Map<String, String> params = Collections.newMap(input.getPathParameters());
-
-		final Long from = Long.parseLong(params.get("from"));
-		final Long to = Long.parseLong(params.get("to"));
-
-		context.getLogger().log("Input: from=" + from + " to=" + to);
-
-		final HttpCallParams callParams = Http.newCallParams();
-		final HttpURL http_url = Http.newURL(queryServerUrlString + "?from=" + from + "&to=" + to);
-		callParams.setURL(http_url);
-		final HttpCall call = Http.newCall(callParams);
-		final HttpCallExecutor exe = Http.newCallExecutor();
+	public void handleRequest (final java.io.InputStream javaInput, final java.io.OutputStream javaOutput, final Context context) {
 		try {
+			final InputStream is = IO.newInputStream( () -> javaInput);
+			final OutputStream os = IO.newOutputStream( () -> javaOutput);
+// <APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent>
+
+			is.open();
+			final String inputString = is.readAllToString();
+			is.close();
+
+			context.getLogger().log("Input: RQ>" + inputString + "<");
+
+			final ArchiveRequest input = Json.deserializeFromString(ArchiveRequest.class, inputString);
+
+			final Long from = input.from;
+			final Long to = input.to;
+
+			context.getLogger().log("Input: from=" + from + " to=" + to);
+
+			final HttpCallParams callParams = Http.newCallParams();
+			final HttpURL http_url = Http.newURL(queryServerUrlString + "?from=" + from + "&to=" + to);
+			callParams.setURL(http_url);
+			final HttpCall call = Http.newCall(callParams);
+			final HttpCallExecutor exe = Http.newCallExecutor();
+
 			final HttpCallProgress result = exe.execute(call);
 			final String dataSamples = result.readResultAsString();
 
 			final String archiveFileName = this.newArchiveFileName(context);
 			final File archive = archivesFolder.child(archiveFileName);
 
-			final FileOutputStream os = archive.newOutputStream();
-			final GZipOutputStream zip = IO.newGZipStream(os);
+			final FileOutputStream fos = archive.newOutputStream();
+			final GZipOutputStream zip = IO.newGZipStream(fos);
 
-			os.open();
+			fos.open();
 			zip.open();
 			zip.write(dataSamples.getBytes());
 			zip.close();
-			os.close();
+			fos.close();
 
 			final APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent();
 			response.setStatusCode(200);
 			response.setBody(archiveFileName);
 
-			return response;
-
+			final byte[] bytes = Json.serializeToString(response).toString().getBytes();
+			{
+				os.open();
+				os.write(bytes);
+				os.close();
+			}
 		} catch (final IOException e) {
 			Err.reportError(e);
-			return null;
 		}
 	}
 
