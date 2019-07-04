@@ -3,6 +3,13 @@ package com.jfixby.reynencourt.demo;
 
 import com.jfixby.scarabei.api.json.Json;
 
+//{
+//	  "timestamp": 1562242185239,
+//	  "event_id": "test_event",
+//	  "event_type": "test_event_type",
+//	  "value": "test_event_value"
+//}
+
 public class DataSample {
 
 	public Long timestamp;
