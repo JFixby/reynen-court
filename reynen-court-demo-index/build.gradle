@@ -14,6 +14,11 @@ dependencies {
       compile "com.github.Scarabei.Scarabei:scarabei-red:$scarabeiVersion"
       compile "com.github.Scarabei.Scarabei:scarabei-api-desktop:$scarabeiVersion"
       compile "com.github.Scarabei.Scarabei:scarabei-red-desktop:$scarabeiVersion"
+      
+      compile "com.github.Scarabei.Scarabei:scarabei-aws-api:$scarabeiVersion"
+      compile "com.github.Scarabei.Scarabei:scarabei-aws-desktop-s3:$scarabeiVersion"
+
+      compile project(":reynen-court-demo-core")
 
       compile group: 'com.amazonaws', name: 'aws-lambda-java-core', version: '1.2.0'
       compile group: 'com.amazonaws', name: 'aws-lambda-java-events', version: '2.2.6'
