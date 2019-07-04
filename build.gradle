@@ -9,5 +9,5 @@ buildscript {
 }
 
 ext {
-        scarabeiVersion = "d26d3a1a19"
+        scarabeiVersion = "3e30d0423d"
 }
