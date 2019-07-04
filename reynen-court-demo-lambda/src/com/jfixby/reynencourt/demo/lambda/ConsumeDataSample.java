@@ -4,6 +4,7 @@ package com.jfixby.reynencourt.demo.lambda;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.jfixby.reynencourt.demo.DataSample;
+import com.jfixby.reynencourt.demo.LambdaResponse;
 import com.jfixby.scarabei.api.collections.Map;
 import com.jfixby.scarabei.api.json.Json;
 import com.jfixby.scarabei.api.log.L;
@@ -12,7 +13,7 @@ import com.jfixby.scarabei.api.sys.settings.ExecutionMode;
 import com.jfixby.scarabei.api.sys.settings.SystemSettings;
 import com.jfixby.scarabei.red.desktop.ScarabeiDesktop;
 
-public class ConsumeDataSample implements RequestHandler<DataSample, String> {
+public class ConsumeDataSample implements RequestHandler<DataSample, LambdaResponse> {
 
 	public static void init () {
 	}
@@ -28,11 +29,12 @@ public class ConsumeDataSample implements RequestHandler<DataSample, String> {
 	static final DataSample DefaultDataSample;
 
 	@Override
-	public String handleRequest (final DataSample input, final Context context) {
-		if (input == null || DefaultDataSample.equals(input)) {
-			return "No DataSample found: " + input;
-		}
+	public LambdaResponse handleRequest (final DataSample input, final Context context) {
 		context.getLogger().log("Input: " + input);
-		return "Output: <" + input + ">";
+		if (input == null || DefaultDataSample.equals(input)) {
+			return Lambda.respondMessage("No DataSample found: <" + input + ">", 400);
+		}
+		return Lambda.respondMessage("Output: <" + input + ">");
 	}
+
 }
