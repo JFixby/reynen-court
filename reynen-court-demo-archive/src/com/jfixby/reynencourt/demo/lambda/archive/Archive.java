@@ -31,7 +31,7 @@ import com.jfixby.scarabei.aws.api.s3.S3FileSystemConfig;
 import com.jfixby.scarabei.aws.desktop.s3.DesktopS3;
 import com.jfixby.scarabei.red.desktop.ScarabeiDesktop;
 
-public class Archive implements RequestHandler<Query, Result> {
+public class Archive implements RequestHandler<Query, LambdaResponse> {
 
 	private static File archivesFolder;
 	private static String queryServerUrlString;
@@ -78,7 +78,7 @@ public class Archive implements RequestHandler<Query, Result> {
 	}
 
 	@Override
-	public Result handleRequest (final Query input, final Context context) {
+	public LambdaResponse handleRequest (final Query input, final Context context) {
 		context.getLogger().log("Input: " + input);
 
 		final Long from = 0L;
@@ -105,13 +105,12 @@ public class Archive implements RequestHandler<Query, Result> {
 			zip.close();
 			os.close();
 
-			return archiveFileName;
+			return LambdaResponse.respondMessage(archiveFileName);
 
 		} catch (final IOException e) {
 			Err.reportError(e);
+			return null;
 		}
-
-		return "Consumed <" + input + ">";
 	}
 
 	private String newArchiveFileName (final Context context) {
