@@ -1,11 +1,11 @@
 
-package com.jfixby.reynencourt.demo.lambda;
+package com.jfixby.reynencourt.demo.lambda.consume;
 
 import java.io.IOException;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
-import com.jfixby.reynencourt.demo.DataSample;
+import com.jfixby.reynencourt.demo.lambda.DataSample;
 import com.jfixby.scarabei.api.collections.Map;
 import com.jfixby.scarabei.api.err.Err;
 import com.jfixby.scarabei.api.file.File;

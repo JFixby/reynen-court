@@ -1,4 +1,7 @@
-include "reynen-court-demo-lambda"
+include "reynen-court-demo-core"
+include "reynen-court-demo-consume"
+include "reynen-court-demo-index"
+
 include "reynen-court-demo-deploy"
 
 

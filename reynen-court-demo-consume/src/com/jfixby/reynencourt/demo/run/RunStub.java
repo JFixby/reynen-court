@@ -1,8 +1,8 @@
 
 package com.jfixby.reynencourt.demo.run;
 
-import com.jfixby.reynencourt.demo.DataSample;
-import com.jfixby.reynencourt.demo.lambda.ConsumeDataSample;
+import com.jfixby.reynencourt.demo.lambda.DataSample;
+import com.jfixby.reynencourt.demo.lambda.consume.ConsumeDataSample;
 import com.jfixby.scarabei.api.log.L;
 import com.jfixby.scarabei.api.sys.Sys;
 
