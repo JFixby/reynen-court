@@ -16,6 +16,7 @@ import com.jfixby.scarabei.api.names.ID;
 import com.jfixby.scarabei.api.sys.Sys;
 import com.jfixby.scarabei.api.sys.settings.ExecutionMode;
 import com.jfixby.scarabei.api.sys.settings.SystemSettings;
+import com.jfixby.scarabei.aws.api.AWSCredentials;
 import com.jfixby.scarabei.aws.api.s3.S3;
 import com.jfixby.scarabei.aws.api.s3.S3Component;
 import com.jfixby.scarabei.aws.api.s3.S3FileSystem;
@@ -41,14 +42,14 @@ public class ConsumeDataSample implements RequestHandler<DataSample, String> {
 		L.d("System settings", settings);
 
 		final S3FileSystemConfig s3config = s3.newFileSystemConfig();
-		final String accessKeyID = SystemSettings.getStringParameter(s3.AWS_ACCESS_KEY(), "");
+		final String accessKeyID = SystemSettings.getStringParameter(AWSCredentials.AWS_ACCESS_KEY(), null);
 		s3config.setAccessKeyID(accessKeyID);
-		final String regionName = SystemSettings.getStringParameter(s3.AWS_REGION_NAME(), "");
+		final String regionName = SystemSettings.getStringParameter(AWSCredentials.AWS_REGION_NAME(), null);
 
 		s3config.setRegionName(regionName);
-		final String secretKeyID = SystemSettings.getStringParameter(s3.AWS_SECRET_KEY(), "");
+		final String secretKeyID = SystemSettings.getStringParameter(AWSCredentials.AWS_SECRET_KEY(), null);
 		s3config.setSecretKeyID(secretKeyID);
-		final String s3BucketName = SystemSettings.getStringParameter(s3.BUCKET_NAME(), "");
+		final String s3BucketName = SystemSettings.getStringParameter(s3.BUCKET_NAME(), null);
 		s3config.setBucketName(s3BucketName);
 		L.d("Connecting to S3 Bucket", s3BucketName + " at " + regionName + " ...");
 		L.d("s3config", s3config.toString());
@@ -61,8 +62,8 @@ public class ConsumeDataSample implements RequestHandler<DataSample, String> {
 			dataFolder = remoteFolder.child("data");
 			dataFolder.makeFolder();
 		} catch (final IOException e) {
+			e.printStackTrace();
 			Err.reportError(e);
-
 		}
 	}
 
