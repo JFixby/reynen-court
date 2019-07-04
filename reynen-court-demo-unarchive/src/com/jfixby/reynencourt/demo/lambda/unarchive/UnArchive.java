@@ -87,6 +87,9 @@ public class UnArchive implements RequestStreamHandler {
 
 			final String archiveFileName = input.archive_id;
 			final File archive = archivesFolder.child(archiveFileName);
+			if (!archive.exists()) {
+				return;
+			}
 
 			final FileInputStream fis = archive.newInputStream();
 
@@ -101,7 +104,8 @@ public class UnArchive implements RequestStreamHandler {
 				fis.close();
 			}
 		} catch (final IOException e) {
-			Err.reportError(e);
+			e.printStackTrace();
+// Err.reportError(e);
 		}
 	}
 
