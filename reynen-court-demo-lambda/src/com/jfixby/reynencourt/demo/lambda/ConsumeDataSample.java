@@ -22,14 +22,14 @@ public class ConsumeDataSample implements RequestHandler<DataSample, String> {
 		SystemSettings.setExecutionMode(ExecutionMode.EARLY_DEVELOPMENT);
 		final Map<ID, Object> settings = SystemSettings.listAllSettings();
 		L.d("System settings", settings);
-		DefaultDataSample = Json.deserializeFromString(DataSample.class, "");
+		DefaultDataSample = Json.deserializeFromString(DataSample.class, "{}");
 	}
 
 	static final DataSample DefaultDataSample;
 
 	@Override
 	public String handleRequest (final DataSample input, final Context context) {
-		if (DefaultDataSample.equals(input)) {
+		if (input == null || DefaultDataSample.equals(input)) {
 			return "No DataSample found: " + input;
 		}
 		context.getLogger().log("Input: " + input);
