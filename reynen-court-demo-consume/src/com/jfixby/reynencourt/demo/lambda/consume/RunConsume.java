@@ -5,7 +5,7 @@ import com.jfixby.reynencourt.demo.lambda.DataSample;
 import com.jfixby.scarabei.api.log.L;
 import com.jfixby.scarabei.api.sys.Sys;
 
-public class RunStub {
+public class RunConsume {
 
 	public static void main (final String[] args) {
 		ConsumeDataSample.init();
