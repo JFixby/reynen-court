@@ -5,6 +5,9 @@ import java.io.IOException;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
+import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
+import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
+import com.jfixby.scarabei.api.collections.Collections;
 import com.jfixby.scarabei.api.collections.Map;
 import com.jfixby.scarabei.api.err.Err;
 import com.jfixby.scarabei.api.file.File;
@@ -31,7 +34,7 @@ import com.jfixby.scarabei.aws.api.s3.S3FileSystemConfig;
 import com.jfixby.scarabei.aws.desktop.s3.DesktopS3;
 import com.jfixby.scarabei.red.desktop.ScarabeiDesktop;
 
-public class Archive implements RequestHandler<Query, LambdaResponse> {
+public class Archive implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
 
 	private static File archivesFolder;
 	private static String queryServerUrlString;
@@ -78,11 +81,13 @@ public class Archive implements RequestHandler<Query, LambdaResponse> {
 	}
 
 	@Override
-	public LambdaResponse handleRequest (final Query input, final Context context) {
+	public APIGatewayProxyResponseEvent handleRequest (final APIGatewayProxyRequestEvent input, final Context context) {
 		context.getLogger().log("Input: " + input);
 
-		final Long from = 0L;
-		final Long to = 0L;
+		final Map<String, String> params = Collections.newMap(input.getPathParameters());
+
+		final Long from = Long.parseLong(params.get("from"));
+		final Long to = Long.parseLong(params.get("to"));
 
 		final HttpCallParams callParams = Http.newCallParams();
 		final HttpURL http_url = Http.newURL(queryServerUrlString + "?from=" + from + "&to=" + to);
@@ -105,7 +110,11 @@ public class Archive implements RequestHandler<Query, LambdaResponse> {
 			zip.close();
 			os.close();
 
-			return LambdaResponse.respondMessage(archiveFileName);
+			final APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent();
+			response.setStatusCode(200);
+			response.setBody(archiveFileName);
+
+			return response;
 
 		} catch (final IOException e) {
 			Err.reportError(e);
