@@ -71,4 +71,26 @@ public class DataSample {
 		return true;
 	}
 
+	public static boolean isInvalid (final DataSample input) {
+		if (input == null) {
+			return true;
+		}
+		if (input.event_id == null) {
+			return true;
+		}
+		if (input.event_id.equals("")) {
+			return true;
+		}
+		if (input.event_type == null) {
+			return true;
+		}
+		if (input.event_type.equals("")) {
+			return true;
+		}
+		if (input.timestamp == null) {
+			return true;
+		}
+		return false;
+	}
+
 }
