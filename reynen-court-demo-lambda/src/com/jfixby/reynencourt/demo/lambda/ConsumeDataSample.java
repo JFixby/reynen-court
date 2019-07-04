@@ -4,7 +4,7 @@ package com.jfixby.reynencourt.demo.lambda;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.jfixby.reynencourt.demo.DataSample;
-import com.jfixby.reynencourt.demo.LambdaResponse;
+import com.jfixby.reynencourt.demo.LambdaJsonResponse;
 import com.jfixby.scarabei.api.collections.Map;
 import com.jfixby.scarabei.api.log.L;
 import com.jfixby.scarabei.api.names.ID;
@@ -12,7 +12,7 @@ import com.jfixby.scarabei.api.sys.settings.ExecutionMode;
 import com.jfixby.scarabei.api.sys.settings.SystemSettings;
 import com.jfixby.scarabei.red.desktop.ScarabeiDesktop;
 
-public class ConsumeDataSample implements RequestHandler<DataSample, LambdaResponse> {
+public class ConsumeDataSample implements RequestHandler<DataSample, LambdaJsonResponse> {
 
 	public static void init () {
 	}
@@ -25,7 +25,7 @@ public class ConsumeDataSample implements RequestHandler<DataSample, LambdaRespo
 	}
 
 	@Override
-	public LambdaResponse handleRequest (final DataSample input, final Context context) {
+	public LambdaJsonResponse handleRequest (final DataSample input, final Context context) {
 		context.getLogger().log("Input: " + input);
 		if (DataSample.isInvalid(input)) {
 			return Lambda.respondMessage("Invalid DataSample <" + input + ">", 400);

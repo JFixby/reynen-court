@@ -1,6 +1,8 @@
 
 package com.jfixby.reynencourt.demo;
 
+import com.jfixby.scarabei.api.json.Json;
+
 public class DataSample {
 
 	public Long timestamp;
@@ -91,6 +93,10 @@ public class DataSample {
 			return true;
 		}
 		return false;
+	}
+
+	public String toJsonString () {
+		return Json.serializeToString(this).toString();
 	}
 
 }
