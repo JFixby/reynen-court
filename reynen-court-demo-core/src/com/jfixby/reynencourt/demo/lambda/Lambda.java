@@ -1,7 +1,6 @@
 
 package com.jfixby.reynencourt.demo.lambda;
 
-import com.jfixby.reynencourt.demo.LambdaJsonResponse;
 import com.jfixby.scarabei.api.collections.Map;
 import com.jfixby.scarabei.api.json.Json;
 

@@ -1,5 +1,5 @@
 
-package com.jfixby.reynencourt.demo;
+package com.jfixby.reynencourt.demo.lambda;
 
 import com.jfixby.scarabei.api.json.Json;
 

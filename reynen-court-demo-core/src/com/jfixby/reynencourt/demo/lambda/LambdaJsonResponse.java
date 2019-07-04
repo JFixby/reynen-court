@@ -1,5 +1,5 @@
 
-package com.jfixby.reynencourt.demo;
+package com.jfixby.reynencourt.demo.lambda;
 
 public class LambdaJsonResponse {
 
