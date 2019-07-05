@@ -8,5 +8,7 @@ include "reynen-court-demo-unarchive"
 
 include "reynen-court-demo-deploy"
 
+include "reynen-court-lambda-prototype"
+
 
 

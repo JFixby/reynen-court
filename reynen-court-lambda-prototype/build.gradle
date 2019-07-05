@@ -1,0 +1,31 @@
+apply plugin: "java"
+apply plugin: "maven"
+
+repositories {
+          	 maven { url 'https://jitpack.io' }
+        	 mavenCentral()
+}
+
+sourceCompatibility = 1.8
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+dependencies {
+      compile "com.github.Scarabei.Scarabei:scarabei-api:$scarabeiVersion"
+      compile "com.github.Scarabei.Scarabei:scarabei-red:$scarabeiVersion"
+      compile "com.github.Scarabei.Scarabei:scarabei-api-desktop:$scarabeiVersion"
+      compile "com.github.Scarabei.Scarabei:scarabei-red-desktop:$scarabeiVersion"
+
+      compile group: 'com.amazonaws', name: 'aws-lambda-java-core', version: '1.2.0'
+      compile group: 'com.amazonaws', name: 'aws-lambda-java-events', version: '2.2.6'
+}	
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/']
+        }
+        resources {
+            
+        }
+    }
+}

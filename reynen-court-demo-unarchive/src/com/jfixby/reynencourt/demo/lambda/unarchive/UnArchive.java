@@ -89,6 +89,15 @@ public class UnArchive implements RequestStreamHandler {
 			final String archiveFileName = input.archive_id;
 			final File archive = archivesFolder.child(archiveFileName);
 			if (!archive.exists()) {
+				final APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent();
+				response.setStatusCode(404);
+				response.setBody(inputString);
+				final byte[] bytes = Json.serializeToString(response).toString().getBytes();
+				{
+					os.open();
+					os.write(bytes);
+					os.close();
+				}
 				return;
 			}
 
