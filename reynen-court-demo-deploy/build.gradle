@@ -12,14 +12,15 @@ sourceCompatibility = 1.8
 
 
 dependencies {
-      //compile "com.github.Scarabei.Scarabei:scarabei-api:$scarabeiVersion"
-      //compile "com.github.Scarabei.Scarabei:scarabei-red:$scarabeiVersion"
+      compile "com.github.Scarabei.Scarabei:scarabei-api:$scarabeiVersion"
+      compile "com.github.Scarabei.Scarabei:scarabei-red:$scarabeiVersion"
+      compile "com.github.Scarabei.Scarabei:scarabei-red-desktop:$scarabeiVersion"
       
-      //compile "com.github.Scarabei.Scarabei:scarabei-aws-api:$scarabeiVersion"
-      //compile "com.github.Scarabei.Scarabei:scarabei-aws-red:$scarabeiVersion"
+      compile "com.github.Scarabei.Scarabei:scarabei-aws-api:$scarabeiVersion"
+      compile "com.github.Scarabei.Scarabei:scarabei-aws-red:$scarabeiVersion"
       
-      //compile "com.github.Scarabei.Scarabei:scarabei-aws-desktop:$scarabeiVersion"
-      //compile "com.github.Scarabei.Scarabei:scarabei-red-desktop:$scarabeiVersion"
+      compile "com.github.Scarabei.Scarabei:scarabei-aws-desktop:$scarabeiVersion"
+      compile "com.github.Scarabei.Scarabei:scarabei-aws-desktop-s3:$scarabeiVersion"
       
       
 

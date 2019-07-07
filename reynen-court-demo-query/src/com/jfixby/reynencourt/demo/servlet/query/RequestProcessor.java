@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.jfixby.reynencourt.demo.DataSample;
-import com.jfixby.reynencourt.demo.api.DataSampleStorage;
+import com.jfixby.reynencourt.demo.storage.api.DataSample;
+import com.jfixby.reynencourt.demo.storage.api.DataSampleStorage;
 import com.jfixby.scarabei.api.collections.Collection;
 import com.jfixby.scarabei.api.collections.Collections;
 import com.jfixby.scarabei.api.collections.List;
