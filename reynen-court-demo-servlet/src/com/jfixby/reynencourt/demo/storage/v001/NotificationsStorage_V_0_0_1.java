@@ -105,12 +105,12 @@ public class NotificationsStorage_V_0_0_1 implements DataSampleStorage {
 	}
 
 	@Override
-	public String aggregateAverage (final long fromTimestamp, final long toTimestamp) {
+	public Long aggregateAverage (final long fromTimestamp, final long toTimestamp) {
 		return this.index.aggregateAverage(fromTimestamp, toTimestamp);
 	}
 
 	@Override
-	public String aggregateSum (final long fromTimestamp, final long toTimestamp) {
+	public Long aggregateSum (final long fromTimestamp, final long toTimestamp) {
 		return this.index.aggregateSum(fromTimestamp, toTimestamp);
 	}
 

@@ -242,7 +242,7 @@ public class RequestProcessor {
 	private void queryFromToSUM (final EntryPointArguments arg) throws IOException {
 		final long fromTimestamp = Long.parseLong(getHeader("from", arg.inputHeaders));
 		final long toTimestamp = Long.parseLong(getHeader("to", arg.inputHeaders));
-		final String result = this.storage.aggregateSum(fromTimestamp, toTimestamp);
+		final Long result = this.storage.aggregateSum(fromTimestamp, toTimestamp);
 		final OutputStream os = IO.newOutputStream( () -> arg.server_to_client_stream);
 		os.open();
 		final byte[] bytes = result.toString().getBytes();
@@ -254,7 +254,7 @@ public class RequestProcessor {
 	private void queryFromToAVG (final EntryPointArguments arg) throws IOException {
 		final long fromTimestamp = Long.parseLong(getHeader("from", arg.inputHeaders));
 		final long toTimestamp = Long.parseLong(getHeader("to", arg.inputHeaders));
-		final String result = this.storage.aggregateAverage(fromTimestamp, toTimestamp);
+		final Long result = this.storage.aggregateAverage(fromTimestamp, toTimestamp);
 		final OutputStream os = IO.newOutputStream( () -> arg.server_to_client_stream);
 		os.open();
 		final byte[] bytes = result.toString().getBytes();

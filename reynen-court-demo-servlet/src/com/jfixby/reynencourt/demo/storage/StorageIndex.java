@@ -13,8 +13,8 @@ public interface StorageIndex {
 
 	Collection<DataSample> queryFromToTimestamp (long fromTimestamp, long toTimestamp);
 
-	String aggregateSum (long fromTimestamp, long toTimestamp);
+	Long aggregateSum (long fromTimestamp, long toTimestamp);
 
-	String aggregateAverage (long fromTimestamp, long toTimestamp);
+	Long aggregateAverage (long fromTimestamp, long toTimestamp);
 
 }

@@ -14,9 +14,9 @@ public interface DataSampleStorage {
 
 	public Collection<DataSample> queryFromToTimestamp (final long fromTimestamp, final long toTimestamp);
 
-	public String aggregateAverage (final long fromTimestamp, final long toTimestamp);
+	public Long aggregateAverage (final long fromTimestamp, final long toTimestamp);
 
-	public String aggregateSum (final long fromTimestamp, final long toTimestamp);
+	public Long aggregateSum (final long fromTimestamp, final long toTimestamp);
 
 	public String archive (final long fromTimestamp, final long toTimestamp) throws IOException;
 
