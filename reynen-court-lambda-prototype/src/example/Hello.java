@@ -21,16 +21,21 @@ public class Hello implements RequestStreamHandler {
 	@Override
 	public void handleRequest (final java.io.InputStream javaInput, final java.io.OutputStream javaOutput, final Context context) {
 		try {
-			final InputStream is = IO.newInputStream( () -> javaInput);
-			final OutputStream os = IO.newOutputStream( () -> javaOutput);
 
+			final InputStream is = IO.newInputStream( () -> javaInput);
 			is.open();
 			final String inputString = is.readAllToString();
 			is.close();
 
-			context.getLogger().log("Input: RQ>" + inputString + "<");
+			context.getLogger().log("Input: inputString>" + inputString + "<");
 
-			final String response = inputString + " >>> " + inputString;
+// final APIGatewayProxyRequestEvent rq = Json.deserializeFromString(APIGatewayProxyRequestEvent.class, inputString);
+// final Map<String, String> params = rq.getQueryStringParameters();
+// final String ask = params.get("ask");
+//
+			final OutputStream os = IO.newOutputStream( () -> javaOutput);
+// context.getLogger().log("Input: RQ>" + ask + "<");
+			final String response = "RESPONSE: " + inputString;
 
 			os.open();
 			os.write(response.getBytes());
