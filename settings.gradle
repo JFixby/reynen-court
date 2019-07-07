@@ -1,14 +1,16 @@
-include "reynen-court-demo-core"
-include "reynen-court-demo-consume"
-include "reynen-court-demo-index"
-include "reynen-court-demo-query"
+//include "reynen-court-demo-core"
+//include "reynen-court-demo-consume"
+//include "reynen-court-demo-index"
+//include "reynen-court-demo-query"
 
-include "reynen-court-demo-archive"
-include "reynen-court-demo-unarchive"
+//include "reynen-court-demo-archive"
+//include "reynen-court-demo-unarchive"
 
 include "reynen-court-demo-deploy"
+include "reynen-court-demo-servlet"
 
-include "reynen-court-lambda-prototype"
+
+//include "reynen-court-lambda-prototype"
 
 
 
